@@ -82,6 +82,26 @@
       if(!/^register now$/i.test(t)) return;
       el.classList.add("bdc-reg");
       if(el.classList.contains("is-menu")) el.classList.add("bdc-reg-nav");
+      ["font-family","font-weight","font-size","letter-spacing","text-transform"].forEach(function(k){});
+      el.style.setProperty("font-family","Newsreader, Georgia, serif","important");
+      el.style.setProperty("font-weight","500","important");
+      el.style.setProperty("font-size","1.0625rem","important");
+      el.style.setProperty("letter-spacing","0.01em","important");
+      el.style.setProperty("text-transform","none","important");
+      el.querySelectorAll("*").forEach(function(h){
+        h.style.setProperty("font-family","Newsreader, Georgia, serif","important");
+        h.style.setProperty("font-weight","500","important");
+        h.style.setProperty("font-size","1.0625rem","important");
+        h.style.setProperty("text-transform","none","important");
+      });
+    });
+    document.querySelectorAll("body,p,li,.navbar_link,.footer_link,.text-size-medium,.bdc-card p,.bdc-who,.bdc-time").forEach(function(el){
+      if(el.closest("h1,h2,h3,h4")) return;
+      el.style.setProperty("font-family","Newsreader, Georgia, serif","important");
+      if(!el.matches(".navbar_link,.footer_link,.bdc-reg")) el.style.setProperty("font-weight","400","important");
+    });
+    document.querySelectorAll(".navbar_link,.footer_link").forEach(function(el){
+      el.style.setProperty("font-weight","500","important");
     });
   }
   function contacts(){
@@ -93,9 +113,12 @@
     document.querySelectorAll("h1,h2,h3").forEach(function(el){
       var t=(el.textContent||"").replace(/\s+/g," ").trim().toUpperCase();
       if(t==="PHOTOS" || t==="PHOTO" || t==="PHOTO(S)"){
-        var sec=el.closest("section")||el.parentElement;
-        if(sec){ sec.classList.add("bdc-photos-on"); }
+        var wrap=el.parentElement||el;
+        wrap.classList.add("bdc-photos-on");
+        wrap.style.setProperty("background","#000","important");
+        wrap.style.setProperty("color","#fff","important");
         el.style.setProperty("color","#fff","important");
+        el.style.setProperty("-webkit-text-fill-color","#fff","important");
         return;
       }
       if(!/^(AGENDA|SPEAKERS|PARTNERS|CONTENT)$/.test(t)) return;
@@ -239,5 +262,7 @@
   }
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", apply); else apply();
   window.addEventListener("load", apply);
-  [300,900,1800,3200,5000].forEach(function(ms){ setTimeout(apply, ms); });
+  window.addEventListener("resize", function(){ setTimeout(apply, 140); });
+  [300,900,1800,3200,4600,6200].forEach(function(ms){ setTimeout(apply, ms); });
+  var ticks=0; var clock=setInterval(function(){ apply(); if(++ticks>8) clearInterval(clock); }, 2000);
 })();
